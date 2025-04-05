@@ -1,0 +1,15 @@
+﻿@model List<PdfQuiz>
+@{
+    ViewData["Title"] = "إمتحانات";
+}
+<div class="pdf-quizzes-page">
+    <div class="quizzes">
+        @foreach (PdfQuiz q in Model)
+        {
+            <a href="@q.Link" class="quiz">
+                <div class="img"><img src="/images/undraw_personal_file_re_5joy.svg"></div>
+                <div class="title">@q.Name</div>
+            </a>
+        }
+    </div>
+</div>

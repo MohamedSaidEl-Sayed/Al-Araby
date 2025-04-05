@@ -1,0 +1,10 @@
+﻿@model TeachingCU
+<form asp-controller="TeachingCU" asp-action="Edit" class="edit-unit display-none">
+    <input asp-for="@Model.Name" id="edit-unit-input">
+    <input asp-for="@Model.Id"  id="edit-unit-input-id" hidden class="display-none">
+    <input asp-for="@Model.TeachingCategoryId" id="edit-unit-input-categoryid" hidden class="display-none">
+    <div class="actions">
+        <input type="submit" value="حفظ" id="edit-unit">
+        <input type="button" value="إلغاء" id="cancel-edit-unit">
+    </div>
+</form>

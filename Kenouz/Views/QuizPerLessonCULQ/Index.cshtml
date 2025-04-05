@@ -1,0 +1,227 @@
+﻿@model List<QuizPerLessonCULQ>
+@{
+    string modelString = JsonConvert.SerializeObject(Model);
+}
+<div class="lesson-quiz-counter">
+    <div id="modelString" hidden style="display:none;">@modelString</div>
+    <div class="timer"><span id="sec"></span> : <span id="min"></span></div>
+    <div class="count">السؤال رقم <span id="counter"></span> من اصل <span id="num-of-ques"></span></div>
+</div>
+<div class="lesson-quiz-page">
+    <div class="script"></div>
+    <div class="question">
+        <div class="title"></div>
+        <div class="answers">
+            <div class="overlay display-none" id="overlay"></div>
+
+        </div>
+        <div class="well-done display-none" id="well-done">
+            <p>أحسنت</p>
+            <img src="/images/icons8-checkmark-96.png">
+        </div>
+        <div class="wrong display-none" id="wrong">
+            <p>خطأ</p>
+            <img src="/images/multiply.png">
+        </div>
+        <div class="right-answer display-none" id="right-answer">
+            <p>الإجابة الصحيحة :- </p>
+            <div class="letter"></div>
+        </div>
+    </div>
+    <button class="next" id="finished">تسليم</button>
+    <button class="next display-none" id="next">التالي</button>
+    <button class="over-ques display-none" id="over-ques">
+        <div>انتهت الأسئلة</div>
+        <div id="rate"></div>
+        <div id="mark"></div>
+    </button>
+</div>
+
+
+@section Scripts1{
+<script asp-append-version="true">
+let m = document.getElementById('modelString').innerHTML;
+let model = JSON.parse(m);
+if(model.length > 0){
+    let wellDone = document.getElementById('well-done');
+    let wrong = document.getElementById('wrong');
+    let rightAnswer = document.getElementById('right-answer');
+    let finishedBtn = document.getElementById('finished');
+    let nextBtn = document.getElementById('next');
+    let overlayLayer =document.getElementById('overlay'); //to prevent user from choose another answer after finished
+    let counter = document.getElementById('counter');
+    let numOfQuesEle = document.getElementById('num-of-ques');
+    let index = 0; // number of current question
+    let minutes = document.getElementById('min');
+    let seconds = document.getElementById('sec');
+    let overQues = document.getElementById('over-ques');
+
+    let numOfQuestions = model.length;
+    let myInterval;
+
+    let scriptEle = document.querySelector('.lesson-quiz-page .script');
+    let titleEle = document.querySelector('.lesson-quiz-page .question .title');
+    let answersEle = document.querySelector('.lesson-quiz-page .question .answers');
+    let rightAnswersEle = document.querySelector('.lesson-quiz-page .question .right-answer .letter');
+    let letters = ["أ","ب","ج","د","ه"];
+    let rateEle = document.getElementById('rate');
+    let markEle = document.getElementById('mark');
+    let mark = 0;
+
+
+    numOfQuesEle.innerHTML = numOfQuestions;
+    counter.innerHTML = index+1;
+    getQuestion(index,numOfQuestions);
+    timer(model[index].Minutes,model[index].Seconds,numOfQuestions);
+
+
+
+
+    let allRadioBtn = document.querySelectorAll(".lesson-quiz-page .question .answers .answer input[type='radio']");
+    let allRadioBtnArr = Array.prototype.slice.call(allRadioBtn);
+
+
+    finishedBtn.addEventListener('click',()=>{
+        allRadioBtnArr.forEach(element =>{
+            if(element.checked){
+                if(element.dataset.letter == model[index].RightAnswer){
+                    wellDone.classList.remove('display-none');
+                    mark++;
+                }
+                else{
+                    wrong.classList.remove('display-none');
+                    rightAnswer.classList.remove('display-none');
+                }
+                finishedBtn.classList.add('display-none');
+                if(index < numOfQuestions-1){
+                    nextBtn.classList.remove('display-none');
+                }
+                if(index == numOfQuestions-1){
+                    determineRate(mark,numOfQuestions);
+                    overQues.classList.remove('display-none');
+                }
+                overlayLayer.classList.remove('display-none');
+                clearInterval(myInterval);
+            }
+        });
+    });
+    nextBtn.addEventListener('click',()=>{
+        clearInterval(myInterval);
+        scriptEle.innerHTML = "";
+        titleEle.innerHTML = "";
+        answersEle.innerHTML = "";
+        index++;
+        counter.innerHTML = index+1;
+        getQuestion(index,numOfQuestions);
+        timer(model[index].Minutes,model[index].Seconds,numOfQuestions);
+        overlayLayer = document.getElementById('overlay');
+        allRadioBtn = document.querySelectorAll(".lesson-quiz-page .question .answers .answer input[type='radio']");
+        allRadioBtnArr = Array.prototype.slice.call(allRadioBtn);
+        wellDone.classList.add('display-none');
+        wrong.classList.add('display-none');
+        rightAnswer.classList.add('display-none');
+        nextBtn.classList.add('display-none');
+        finishedBtn.classList.remove('display-none');
+        //allRadioBtnArr.forEach(element => {
+        //    element.checked = false;
+        //});
+        overlayLayer.classList.add('display-none');
+    });
+
+    function timer(min,sec,numofques){
+        minutes.innerText = min;
+        seconds.innerText = sec;
+        if(sec == 0){sec=60}
+        myInterval = setInterval( () =>{
+            sec--;
+            seconds.innerHTML = sec;
+            if(sec == 59){
+                min--;
+                minutes.innerHTML = min;
+            }
+            if(sec == 0 && min !=0){
+                seconds.innerHTML = 0;
+                sec = 60;
+            }
+            if(sec==-1 && min==0 && index == numofques-1){
+                clearInterval(myInterval);
+                seconds.innerHTML = 0;
+                finishedBtn.classList.add('display-none');
+                determineRate(mark,numOfQuestions);
+                overQues.classList.remove('display-none');
+                overlayLayer.classList.remove('display-none');
+            }
+            if(sec == -1 && min == 0){
+                clearInterval(myInterval);
+                if(index < numofques-1){
+                    nextBtn.click();
+                }
+            }
+
+        },1000);
+    }
+
+    function getQuestion(i,numberOfQuestions){
+        if(numberOfQuestions > 0){
+                if(model[i].Script != null && model[i].Script != ""){
+                    scriptEle.innerHTML = model[i].Script;
+                }
+                titleEle.innerHTML = model[i].QuestionTitle;
+                let overlayEle = document.createElement('div');
+                overlayEle.classList.add('overlay','display-none');
+                overlayEle.id = 'overlay';
+                answersEle.appendChild(overlayEle);
+                for(let k = 1; k<=5;k++){
+                    let answer = document.createElement('div');
+                    answer.classList.add('answer');
+                    let inputRadio = document.createElement('input');
+                    inputRadio.type= "radio";
+                    inputRadio.id = `answer${k}`;
+                    inputRadio.name = "selectedAnswer";
+                    inputRadio.setAttribute('data-letter',`${letters[k-1]}`);
+                    let label = document.createElement('label');
+                    label.setAttribute('for',`answer${k}`);
+                    let letter = document.createElement('div');
+                    letter.classList.add('letter');
+                    letter.innerHTML = letters[k-1];
+                    let answerText = document.createElement('div');
+                    answerText.classList.add('answer-text');
+                    answerText.innerHTML = model[i][`Answer${k}`];
+                    label.appendChild(letter);
+                    label.appendChild(answerText);
+                    answer.appendChild(inputRadio);
+                    answer.appendChild(label);
+                    if(model[i][`Answer${k}`] != null && model[i][`Answer${k}`] != "")
+                    {
+                        answersEle.appendChild(answer);
+                    }
+                }
+                rightAnswersEle.innerHTML = model[i].RightAnswer;
+
+        }
+    }
+
+
+    // modify it because it is not accurate
+    function determineRate(markofQuiz,finalMark){
+        markEle.innerHTML = `${markofQuiz}/${finalMark}`;
+        if(markofQuiz < Math.ceil(finalMark * 0.6)){
+            rateEle.innerHTML = "المستوي : سيء";
+        }
+        else if(markofQuiz <= Math.ceil(finalMark * 0.65)){
+            rateEle.innerHTML = "المستوي : مقبول";
+        }
+        else if(markofQuiz <= Math.ceil(finalMark * 0.75)){
+            rateEle.innerHTML = "المستوي : جيد";
+        }
+        else if(markofQuiz <= Math.ceil(finalMark * 0.85)){
+            rateEle.innerHTML = "المستوي : جيد جدا";
+        }
+        else{
+            rateEle.innerHTML = "المستوي : ممتاز";
+        }
+    }
+}
+
+</script>
+}

@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+} 
+
+<div class="container">   
+    <div class="categories">
+        <a class="category" asp-controller="Admin" asp-action="TeachingC">
+            <div class="img">
+                <img src="~/images/undraw_teaching_re_g7e3.svg">
+            </div>
+            <div class="title">
+                <p>شروحات</p>
+            </div>
+        </a>
+        <a class="category" asp-controller="Admin" asp-action="QuizPerLessonC">
+            <div class="img">
+                <img src="~/images/undraw_online_test_re_kyfx.svg">
+            </div>
+            <div class="title">
+                <p>أسئلة علي كل درس</p>
+            </div>
+        </a>
+        <a class="category" asp-controller="Admin" asp-action="RateYourselfQuiz">
+            <div class="img">
+                <img src="~/images/undraw_certificate_re_yadi.svg">
+            </div>
+            <div class="title">
+                <p>قيم نفسك باستمرار</p>
+            </div>
+        </a>
+        <a class="category" asp-controller="Admin" asp-action="PdfQuiz">
+            <div class="img">
+                <img src="~/images/undraw_certification_re_ifll.svg">
+            </div>
+            <div class="title">
+                <p>امتحانات</p>
+            </div>
+        </a>
+        <a class="category" href="">
+            <div class="img">
+                <img src="~/images/undraw_education_f8ru.svg">
+            </div>
+            <div class="title">
+                <p>مراجعات</p>
+            </div>
+        </a>
+    </div>
+</div>
+

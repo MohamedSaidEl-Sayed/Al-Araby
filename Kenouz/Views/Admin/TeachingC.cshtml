@@ -1,0 +1,77 @@
+﻿@model AdminTeachingCViewModel
+@{
+    ViewData["Title"] = "الشروحات";
+}
+
+<div class="lessons-page-overlay display-none"></div>
+@await Html.PartialAsync("_EditTeachingCPartial",Model.teachingC)
+@await Html.PartialAsync("_EditTeachingCUPartial",Model.teachingCU)
+<div class="lessons-page">
+
+    @await Html.PartialAsync("_AddTeachingCPartial",
+                                Model.teachingC,
+                                new ViewDataDictionary(ViewData)
+                                {
+                                    { "year", ViewData["ClassYearId"] }
+                                }
+                                )
+
+    @foreach (TeachingC c in Model.teachingCs)
+    {
+        <div class="category">
+            <div class="category-title">@c.Name</div>
+            <div class="actions">
+                <a class="action-btn update-btn edit-category-btn" data-id="@c.Id" data-name="@c.Name" data-classyearid="@c.ClassYearId">تعديل</a>
+                <form asp-controller="TeachingC" asp-action="Delete" asp-route-id="@c.Id">
+                    <input type="submit" class="action-btn delete-btn"  onclick="return confirm('هل أنت متأكد من حذف @c.Name')" value="حذف">
+                </form>
+            </div>
+        </div>
+        
+        <ul class="units display-none">
+            @await Html.PartialAsync("_AddTeachingCUPartial",
+                                        Model.teachingCU,
+                                        new ViewDataDictionary(ViewData){
+                                            {"CategoryId",c.Id}
+                                        })
+            @foreach (TeachingCU cu in c.TeachingCategoryUnits)
+            {
+                <li>
+                    <div class="unit-title">
+                        <p class="text">@cu.Name</p>
+                        <div class="actions">
+                            <a class="action-btn update-btn edit-unit-btn" data-id="@cu.Id" data-name="@cu.Name" data-categoryId="@cu.TeachingCategoryId">تعديل</a>
+                            <form asp-controller="TeachingCU" asp-action="Delete" asp-route-id="@cu.Id">
+                                <input type="submit" class="action-btn delete-btn" value="حذف" onclick="return confirm('هل أنت متأكد من حذف @cu.Name')"/>
+                            </form>
+                        </div>
+                    </div>
+                    <ul class="lessons">
+                        <div class="new-lesson">
+                            <a asp-controller="TeachingCUL" asp-action="Add" asp-route-unitId="@cu.Id" class="action-btn add-btn">إضافة درس</a>
+                        </div>
+                        @foreach (TeachingCUL cul in cu.TeachingCategoryUnitLessons)
+                        {
+                            <li>
+                                <div class="lesson">
+                                    <a asp-controller="Admin" asp-action="TeachingCUL" asp-route-id="@cul.Id" class="title">@cul.Name</a>
+                                    <div class="actions">
+                                        <a asp-controller="TeachingCUL" asp-action="Edit" asp-route-id="@cul.Id" class="action-btn update-btn">تعديل</a>
+                                        <form asp-controller="TeachingCUL" asp-action="Delete" asp-route-id="@cul.Id">
+                                            <input type="submit"class="action-btn delete-btn" value="حذف" onclick="return confirm('هل أنت متأكد من حذف @cul.Name')">
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                        </ul>
+                </li>
+            }
+        </ul>
+    }
+</div>
+@section Scripts1{
+    <script src="~/js/Admin/Adminlessons.js" asp-append-version="true"></script>
+}
+
+

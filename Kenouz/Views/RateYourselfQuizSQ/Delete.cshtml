@@ -1,0 +1,49 @@
+﻿@model RateYourselfQuizSQ 
+<div class="lesson-quiz-page">
+                <form asp-controller="RateYourselfQuizSQ" asp-action="Delete" class="add-question-form">
+                    <div class="field">
+                        <label asp-for="@Model.QuestionTitle">السؤال</label>
+                        <textarea asp-for="@Model.QuestionTitle"></textarea>
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Answer1">أ</label>
+                        <textarea asp-for="@Model.Answer1"></textarea>
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Answer2">ب</label>
+                        <textarea asp-for="@Model.Answer2"></textarea>
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Answer3">ج</label>
+                        <textarea asp-for="@Model.Answer3"></textarea>
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Answer4">د</label>
+                        <textarea asp-for="@Model.Answer4"></textarea>
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.Answer5">ه</label>
+                        <textarea asp-for="@Model.Answer5"></textarea>
+                    </div>
+                    <div class="field">
+                        <label asp-for="@Model.RightAnswer">الاجابة</label>
+                        <select asp-for="@Model.RightAnswer">
+                            <option value="أ">أ</option>
+                            <option value="ب">ب</option>
+                            <option value="ج">ج</option>
+                            <option value="د">د</option>
+                            <option value="ه">ه</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <input asp-for="@Model.Id" hidden class="display-none"/>
+                    </div>
+                    <div class="field">
+                        <input asp-for="@Model.RateYourselfQuizScriptId" hidden class="display-none"/>
+                    </div>
+                    <div class="field">
+                        <input type="submit" value="حذف">
+                    </div>
+                </form>
+            </div>
+

@@ -1,0 +1,85 @@
+﻿@model CodesViewModel
+@{
+    ViewData["Title"] = "الأكواد";
+}
+
+<div class="add-code-form-overlay display-none" id="add-code-form-overlay"></div>
+<div class="codes container">
+    @await Html.PartialAsync("_AddCodePartial", Model.addCodeViewModel)
+    <a id="add-code-btn" class="action-btn add-btn">إضافة كود</a>
+    <table>
+        <thead>
+            <tr>
+                <th>الأكواد</th>
+                <th>الفئة</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(CodeViewModel c in Model.CodeViewModel)
+            {
+                <tr>
+                    @if (c.Roles.Any(r => r != "Admin"))
+                    {
+                        <td>@c.Code</td>
+                    }
+                    @if(c.Roles.Any(r => r == "User1"))
+                    {
+                        <td>1</td>
+                    }
+                    else if(c.Roles.Any(r => r == "User2"))
+                    {
+                        <td>2</td>
+                    }
+                    else if(c.Roles.Any(r => r == "User3"))
+                    {
+                        <td>3</td>
+                    }
+                    @* else
+                    {
+                        <td>أدمن</td>
+                    } *@
+                    @if(c.Roles.Any(r => r != "Admin")) 
+                    {
+                        <td>
+                            @if (c.IsActive)
+                            {
+                                <form asp-controller="Admin" asp-action="DeactivateCode" asp-route-email="@c.Code">
+                                    <input type="submit" value="تعطيل" class="deactivate"/>
+                                </form>
+                            }else{
+                                <form asp-controller="Admin" asp-action="ActivateCode" asp-route-email="@c.Code">
+                                    <input type="submit" value="تمكين"  class="activate" />
+                                </form>
+                            }
+                            <form asp-controller="Admin" asp-action="DeleteCode" asp-route-email="@c.Code">
+                                <input type="submit" onclick="return confirm('هل أنت متأكد من حذف @c.Code')" value="حذف" class="delete">
+                            </form>
+                        </td>
+                    }
+                       
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>عدد الأكواد</td>
+                <td colspan="2">@Model.CodeViewModel.Count</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+@section Scripts1 {
+    <script src="~/js/Admin/Codes.js" asp-append-version="true"></script>
+   @* <script asp-append-version="true">
+        let deactivatedBtns = document.getElementsByClassName('deactivate');
+        let deactivatedBtnsArr = Array.prototype.slice.call(deactivatedBtns);
+
+        deactivatedBtnsArr.forEach(ele => {
+           ele.addEventListener('click',()=>{
+                ele.classList.add('display-none');
+                ele.previousElementSibling.firstChild.classList.remove('display-none');
+           });
+        });
+    </script>*@
+}

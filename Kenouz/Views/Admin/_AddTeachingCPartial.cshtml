@@ -1,0 +1,6 @@
+﻿@model TeachingC
+<form asp-controller="TeachingC" asp-action="Add" class="new-category">
+    <input type="submit" class="add-category" id="add-category" value="إضافة قسم جديد">
+    <input asp-for="@Model.Name" id="add-category-input">
+    <input asp-for="@Model.ClassYearId" value="@ViewData["year"]" hidden class="display-none" />
+</form>

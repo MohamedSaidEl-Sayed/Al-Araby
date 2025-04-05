@@ -1,0 +1,18 @@
+﻿@model RateYourselfQuizS
+<div class="lesson-quiz-page">
+    <form asp-controller="RateYourselfQuizS" asp-action="Edit" class="add-question-form">
+        <div class="field">
+            <label asp-for="@Model.Script">الفقرة</label>
+            <textarea asp-for="@Model.Script" rows="10"></textarea>
+        </div>
+        <div class="field">
+            <input asp-for="@Model.Id" hidden class="display-none">
+        </div>
+        <div class="field">
+            <input asp-for="@Model.RateYourselfQuizId" hidden class="display-none">
+        </div>
+        <div class="field">
+            <input type="submit" value="حفظ">
+        </div>
+    </form>
+</div>

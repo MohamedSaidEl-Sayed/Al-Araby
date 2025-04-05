@@ -1,0 +1,152 @@
+﻿@*<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Kenouz</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Kenouz.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kenouz</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - Kenouz - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>*@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]|El-Araby</title>
+    <!--bootstrap-->
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+   
+    @if (User.IsInRole("Admin"))
+    {
+         <!-- admin user css file -->
+        <link rel="stylesheet" href="~/css/Admin/AdminDashboard.css" asp-append-version="true">
+    }
+    else
+    {
+         <!-- normal user css file -->
+        <link rel="stylesheet" href="~/css/User/style.css" asp-append-version="true">
+    }
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <header>
+            <div class="container">
+                <a asp-controller="Home" asp-action="Index" class="logo"><img src="~/images/Logo.jpg" asp-append-version="true"/></a>
+                @if (!User.IsInRole("Admin"))
+                {
+                    <div class="desc">
+                        <span class="text">طور مستواك 1% كل يوم</span>
+                    </div>
+                }
+                
+            </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="menu">
+                    <img src="~/icons/user.png" asp-append-version="true">
+                </div>
+                <div class="users">
+                    <a asp-controller="Admin" asp-action="Index" asp-route-id="1" class="user">الصف الأول الثانوي</a>
+                    <a asp-controller="Admin" asp-action="Index" asp-route-id="2" class="user">الصف الثاني الثانوي</a>
+                    <a asp-controller="Admin" asp-action="Index" asp-route-id="3" class="user">الصف الثالث الثانوي</a>
+                </div>
+                <a asp-controller="Admin" asp-action="Codes" class="codes-icon" title="الأكواد">
+                    <img src="~/icons/padlock.png" asp-append-version="true">
+                </a>
+                <a class="log-out-icon" asp-area="Identity" asp-page="/Account/Logout" title="خروج">
+                    <img src="~/icons/LogOut.png" asp-append-version="true">
+                </a>
+            }
+        </header>
+        <!-- <div class="nav-bar">
+            <div class="categories">
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">قصص العرب</div>
+                <div class="category">لا وجود للنحو في قديما</div>
+                <div class="category">علم البلاغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+                <div class="category">تاريخ اللغة</div>
+            </div>
+        </div>  -->
+        <main>
+           @RenderBody()
+        </main>
+        <footer>
+            <div class="container">
+                <div class="contact">
+                    <div class="social-icons">
+                        <p>طور مستواك في اللغة العربية مع الأستاذ طاهر أحمد العربي </p>
+                        <a href="https://www.youtube.com/channel/UCb41LFbja6wq17lQpRVYpyQ/videos" target="_blank" class="icon"><img src="~/icons/youtube.png" asp-append-version="true"></a>
+                        <a href="" class="icon"><img src="~/icons/facebook.png" asp-append-version="true"></a>
+                        <a href="https://wa.me/1112635012" target="_blank" class="icon"><img src="~/icons/whatsapp.png" asp-append-version="true"></a>
+                    </div>                
+                </div>
+                <div class="copy-right">
+                    <p>Kenouz &copy; 2025 - Made By Mohamed Said</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+
+    @await RenderSectionAsync("Scripts1", required: false)
+    @if(User.IsInRole("Admin")){
+        <script src="~/js/Admin/AdminMain.js" asp-append-version="true"></script>
+    }
+</body>
+</html>

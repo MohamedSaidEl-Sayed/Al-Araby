@@ -1,0 +1,66 @@
+﻿@model List<QuizPerLessonC>
+@{
+    ViewData["Title"] = "أسئلة علي كل درس";
+}
+<div class="quiz-per-lesson-page lessons-page">
+
+    @foreach (QuizPerLessonC c in Model)
+    {
+        <div class="category">@c.Name</div>
+        <ul class="units display-none">
+            @foreach (QuizPerLessonCU cu in c.QuizPerLessonCategoryUnits)
+            {
+                <li>
+                    <p class="unit-title">@cu.Name</p>
+                    <ul class="lessons">
+                        @foreach (QuizPerLessonCUL cul in cu.QuizPerLessonCategoryUnitLessons)
+                        {
+                            <li>
+                                <form asp-controller="QuizPerLessonCULQ" asp-action="Index" asp-route-lessonId="@cul.Id" asp-route-classYearId = "@ViewData["classYearId"]" class="test-form">
+                                    <p class="title">@cul.Name</p>
+                                    <input type="submit" value="الأسئلة" class="input-of-test-form">
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    }
+</div>
+@section Scripts1{
+<script src="~/js/User/lessons.js" asp-append-version="true"></script>
+ <script asp-append-version="true">
+        // to ensure that the user will not change the action attribute of the form 
+     // because the user can change the lessonId and change the classyearId 
+     // for example the user of classyearId=1 can put the lessonId=4 and classYearId=2 
+     // but the backend too handle this
+        let forms = document.getElementsByClassName("test-form");
+        let formsArr = Array.prototype.slice.call(forms);
+
+        let inputs = document.getElementsByClassName("input-of-test-form");
+        let inputsArr = Array.prototype.slice.call(inputs);
+
+        TestFormvalues(formsArr,inputsArr);
+
+        function TestFormvalues (formsArray,inputArray){
+            let actions=[];
+            formsArray.forEach(element => {
+                actions.push(element.getAttribute('action'));
+            });
+            for(let i = 0; i< inputArray.length;i++){
+                inputArray[i].addEventListener('click',(e)=>{
+                    let newFormsArr = Array.prototype.slice.call(document.getElementsByClassName("test-form"));
+                    if(newFormsArr[i].getAttribute('action') != actions[i]){
+                        e.preventDefault();
+                    }
+            
+                });
+            }
+        }
+    </script>
+
+}
+
+
+

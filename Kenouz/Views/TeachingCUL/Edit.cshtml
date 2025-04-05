@@ -1,0 +1,24 @@
+﻿@model TeachingCUL
+<div class="add-lesson-page container">
+    <form asp-controller="TeachingCUL" asp-action="Edit">
+        <div class="field">
+            <label asp-for="@Model.Name">اسم الدرس</label>
+            <input asp-for="@Model.Name">
+        </div>
+        <div class="field">
+            <label asp-for="@Model.VideoLink">رابط الفيديو</label>
+            <input asp-for="@Model.VideoLink">
+        </div>
+        <div class="field">
+            <label asp-for="@Model.PdfLink">رابط pdf</label>
+            <input asp-for="@Model.PdfLink">
+        </div>
+         <div class="field">
+            <input asp-for="@Model.TeachingCategoryUnitId" hidden class="display-none">
+        </div>
+        <div class="field">
+            <input type="submit" value="حفظ" class="add-btn">
+        </div>
+    </form>
+</div>
+

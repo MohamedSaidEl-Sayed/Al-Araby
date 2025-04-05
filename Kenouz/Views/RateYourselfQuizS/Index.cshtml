@@ -1,0 +1,448 @@
+﻿@model List<RateYourselfQuizS>
+@{
+    string modelString = JsonConvert.SerializeObject(Model,Formatting.Indented,
+                                                    new JsonSerializerSettings()
+                                                    {
+                                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                    });
+}
+<div id="model-string" hidden style="display:none;">@modelString</div>
+            <div class="nav">
+                <div class="timer"><span id="seconds"></span> : <span id="minutes"></span></div>
+                <div class="bullets"></div>
+            </div>
+            <div class="rate-yourself-quiz-page">
+                <div class="script"></div>
+                <div class="questions">
+                    @*<div class="question" id="s1q1">
+                        <div class="ques-overlay display-none"></div>
+                        <div class="title"></div>
+                        <div class="answers">
+                            <div class="answer">
+                                <input type="radio" name="selectedAnswer1" id="q1ans1">
+                                <label for="q1ans1">
+                                    <div class="letter">أ</div>
+                                    <div class="answer-text">تضمين</div>
+                                </label>
+                            </div>
+                            <div class="answer">
+                                <input type="radio" name="selectedAnswer1" id="q1ans2">
+                                <label for="q1ans2">
+                                    <div class="letter">ب</div>
+                                    <div class="answer-text">معرفة رأي الناس</div>
+                                </label>
+                            </div>
+                            <div class="answer">
+                                <input type="radio" name="selectedAnswer1" id="q1ans3">
+                                <label for="q1ans3">
+                                    <div class="letter">ج</div>
+                                    <div class="answer-text">إخبار الناس بمعلومة</div>
+                                </label>
+                            </div>
+                            <div class="answer">
+                                <input type="radio" name="selectedAnswer1" id="q1ans4">
+                                <label for="q1ans4">
+                                    <div class="letter">د</div>
+                                    <div class="answer-text">الرغبة في شىء</div>
+                                </label>
+                            </div>
+                            <div class="answer">
+                                <input type="radio" name="selectedAnswer1" id="q1ans5">
+                                <label for="q1ans5">
+                                    <div class="letter">ه</div>
+                                    <div class="answer-text">تحليل الموضوع</div>
+                                </label>
+                            </div>
+                        </div>
+                                            <div class="well-done display-none" id="well-done">
+                                <p>أحسنت</p>
+                                <img src="/images/icons8-checkmark-96.png">
+                            </div>
+                            <div class="wrong display-none" id="wrong">
+                                <p>خطأ</p>
+                                <img src="/images/multiply.png">
+                            </div>
+                            <div class="right-answer display-none" id="right-answer">
+                                <p>الإجابة الصحيحة :- </p>
+                                <div class="letter"></div>
+                            </div>
+                    </div>*@
+                </div>
+                <div class="pagination">
+                    <div class="next" id="next">التالي</div>
+                    <div class="pages">
+                        
+                    </div>
+                    <div class="pervious" id="pervious">السابق</div>
+                </div>
+                <div class="finished" id="finished">تسليم</div>
+                <div class="over-ques display-none" id="over-ques">
+                    <div id="rate"></div>
+                    <div id="mark"></div>
+                </div>
+            </div>
+
+@section Scripts1{
+    <script asp-append-version="true" >
+        let m = document.getElementById('model-string').innerHTML;
+        let model = JSON.parse(m);
+        console.log(model);
+        if(model.length > 0){
+            let minutes = document.getElementById('minutes');
+            let seconds = document.getElementById('seconds');
+            let numOfMin = @ViewData["QuizTime"];
+            let numOfSec = 59;
+            let numOfScripts = model.length;
+            let index = 0; // index of each script
+            let bulletsEle = document.querySelector('.nav .bullets');
+            let scriptEle = document.querySelector('.rate-yourself-quiz-page .script');
+            let questionsEle = document.querySelector('.rate-yourself-quiz-page .questions');
+            let letters = ["أ","ب","ج","د","ه"];
+            let pages = document.querySelector('.rate-yourself-quiz-page .pagination .pages');
+            let radioElements;
+            let radioElementsArr;
+            let isFinished = false;
+            let finishedEle = document.getElementById('finished');
+            let markEle = document.getElementById('over-ques');
+            let mark = 0;
+            let ismarked = false;
+            let markedScripts=[];
+            let finalMarkEle = document.getElementById('mark');
+            let finalRateEle = document.getElementById('rate');
+            let numberOfQuestions = 0;
+
+
+            let selectedAnswers =[];
+            for(let n=0;n<model.length;n++){
+                selectedAnswers.push([]);
+            }
+            getQuestions(index);
+            createBullets(index,model[index].RateYourselfQuizScriptQuestions.length);
+            pagination(index,numOfScripts);
+            timer(numOfMin,numOfSec);
+
+            let childernOfPages = Array.prototype.slice.call(pages.children);
+            childernOfPages.forEach(ele => ele.addEventListener('click',()=>{
+                radioElements = document.querySelectorAll('.rate-yourself-quiz-page .question .answer input[type=radio]');
+                radioElementsArr = Array.prototype.slice.call(radioElements);
+                collectSelectedAnswer(index,radioElementsArr);
+                childernOfPages.forEach(e=>e.classList.remove('selected-page'));
+                ele.classList.add('selected-page');
+                index = parseInt(ele.innerHTML)-1;
+                questionsEle.innerHTML='';
+                bulletsEle.innerHTML='';
+                getQuestions(index);
+                radioElements = document.querySelectorAll('.rate-yourself-quiz-page .question .answer input[type=radio]');
+                radioElementsArr = Array.prototype.slice.call(radioElements);
+                checkCollectedAnswers(index,radioElementsArr);
+                createBullets(index,model[index].RateYourselfQuizScriptQuestions.length);
+                if(isFinished){
+                    checkSelectedAnswers(numOfScripts);
+                }
+
+            }));
+
+            let next = document.getElementById('next');
+            next.addEventListener('click',(e)=>{
+                if(index == model.length-1){
+                    e.preventDefault();
+                }else{
+                    radioElements = document.querySelectorAll('.rate-yourself-quiz-page .question .answer input[type=radio]');
+                    radioElementsArr = Array.prototype.slice.call(radioElements);
+                    collectSelectedAnswer(index,radioElementsArr);
+                    index++;
+                    questionsEle.innerHTML='';
+                    bulletsEle.innerHTML='';
+                    getQuestions(index);
+                    radioElements = document.querySelectorAll('.rate-yourself-quiz-page .question .answer input[type=radio]');
+                    radioElementsArr = Array.prototype.slice.call(radioElements);
+                    checkCollectedAnswers(index,radioElementsArr);
+                    createBullets(index,model[index].RateYourselfQuizScriptQuestions.length);
+                    childernOfPages.forEach(e=>e.classList.remove('selected-page'));
+                    childernOfPages.forEach(function(ele){
+                        if(ele.innerHTML == index+1){
+                            ele.classList.add('selected-page');
+                        }
+                    });
+                    if(isFinished){
+                        checkSelectedAnswers(numOfScripts);
+                    }
+                }
+            });
+
+            let pervious = document.getElementById('pervious');
+            pervious.addEventListener('click',(e)=>{
+                if(index == 0){
+                    e.preventDefault();
+                }else{
+                    radioElements = document.querySelectorAll('.rate-yourself-quiz-page .question .answer input[type=radio]');
+                    radioElementsArr = Array.prototype.slice.call(radioElements);
+                    collectSelectedAnswer(index,radioElementsArr);
+                    index--;
+                    questionsEle.innerHTML='';
+                    bulletsEle.innerHTML='';
+                    getQuestions(index);
+                    radioElements = document.querySelectorAll('.rate-yourself-quiz-page .question .answer input[type=radio]');
+                    radioElementsArr = Array.prototype.slice.call(radioElements);
+                    checkCollectedAnswers(index,radioElementsArr);
+                    createBullets(index,model[index].RateYourselfQuizScriptQuestions.length);
+                    childernOfPages.forEach(e=>e.classList.remove('selected-page'));
+                    childernOfPages.forEach(function(ele){
+                        if(ele.innerHTML == index+1){
+                            ele.classList.add('selected-page');
+                        }
+                    });
+                    if(isFinished){
+                        checkSelectedAnswers(numOfScripts);
+                    }
+                }
+            });
+            
+            // to get the questions of each script
+            // i => is the index of script
+            function getQuestions(i){
+                scriptEle.innerHTML = model[i].Script;
+                scriptEle.id = `s${i}`;
+
+                for(let j = 0 ; j<model[i].RateYourselfQuizScriptQuestions.length;j++ ){
+                    let quesOverlayEle = document.createElement('div');
+                    quesOverlayEle.classList.add('ques-overlay');
+                    if(!isFinished){
+                        quesOverlayEle.classList.add('display-none');
+                    }
+
+                    let titleEle = document.createElement('div');
+                    titleEle.classList.add('title');
+                    titleEle.innerHTML = model[i].RateYourselfQuizScriptQuestions[j].QuestionTitle;
+
+                    let answersEle = document.createElement('div');
+                    answersEle.classList.add('answers');
+                    for(let k = 1;k<=5;k++){
+                        if(model[i].RateYourselfQuizScriptQuestions[j][`Answer${k}`] != null && model[i].RateYourselfQuizScriptQuestions[j][`Answer${k}`] != ""){
+
+                            let radioEle = document.createElement('input');
+                            radioEle.setAttribute('type','radio');
+                            radioEle.name = `selectedAnswers${i}q${j}`;
+                            radioEle.id = `s${i}q${j}a${k}`;
+
+                            let labelEle = document.createElement('label');
+                            labelEle.setAttribute('for',`s${i}q${j}a${k}`);
+
+                            let letterEle = document.createElement('div');
+                            letterEle.classList.add('letter');
+                            letterEle.innerHTML = letters[k-1];
+
+                            let answerTextEle = document.createElement('div');
+                            answerTextEle.classList.add('answer-text');
+                            answerTextEle.innerHTML = model[i].RateYourselfQuizScriptQuestions[j][`Answer${k}`];
+
+                            labelEle.appendChild(letterEle);
+                            labelEle.appendChild(answerTextEle);
+                        
+
+                            let answerEle = document.createElement('div');
+                            answerEle.classList.add('answer');
+                            answerEle.appendChild(radioEle);
+                            answerEle.appendChild(labelEle);
+
+                            answersEle.appendChild(answerEle);
+                        }
+                    }
+
+                    let wellDoneText = document.createElement('p');
+                    wellDoneText.innerHTML = "أحسنت";
+                    let wellDoneImage = document.createElement('img');
+                    wellDoneImage.src = "/images/icons8-checkmark-96.png";
+                    let wellDoneEle = document.createElement('div');
+                    wellDoneEle.classList.add('well-done');
+                    if(!isFinished){
+                        wellDoneEle.classList.add('display-none');
+                    }
+                    wellDoneEle.id = `well-dones${i}q${j}`;
+                    wellDoneEle.appendChild(wellDoneText);
+                    wellDoneEle.appendChild(wellDoneImage);
+
+                    let wrongText = document.createElement('p');
+                    wrongText.innerHTML = "خطأ";
+                    let wrongImage = document.createElement('img');
+                    wrongImage.src = "/images/multiply.png";
+                    let wrongEle = document.createElement('div');
+                    wrongEle.classList.add('wrong');
+                    if(!isFinished){
+                        wrongEle.classList.add('display-none');
+                    }
+                    wrongEle.id = `wrongs${i}q${j}`;
+                    wrongEle.appendChild(wrongText);
+                    wrongEle.appendChild(wrongImage);
+
+                    let rightAnswerText = document.createElement('p');
+                    rightAnswerText.innerHTML = "الإجابة الصحيحة :-";
+                    let rightAnswerLetter = document.createElement('div');
+                    rightAnswerLetter.classList.add('letter');
+                    rightAnswerLetter.innerHTML = model[i].RateYourselfQuizScriptQuestions[j].RightAnswer;
+                    //rightAnswerLetter.setAttribute('dataset-rightanswer',`s${i}q${j}a${letters.indexOf(rightAnswerLetter.innerHTML)+1}`)
+                    let rightAnswerEle = document.createElement('div');
+                    rightAnswerEle.classList.add('right-answer');
+                    if(!isFinished){
+                        rightAnswerEle.classList.add('display-none');
+                    }
+                    rightAnswerEle.id = `right-answers${i}q${j}`;
+                    rightAnswerEle.appendChild(rightAnswerText);
+                    rightAnswerEle.appendChild(rightAnswerLetter);
+
+
+
+
+                    let questionEle = document.createElement('div');
+                    questionEle.classList.add('question');
+                    questionEle.id = `s${i}q${j}`;
+                    questionEle.appendChild(quesOverlayEle);
+                    questionEle.appendChild(titleEle);
+                    questionEle.appendChild(answersEle);
+                    questionEle.appendChild(wellDoneEle);
+                    questionEle.appendChild(wrongEle);
+                    questionEle.appendChild(rightAnswerEle);
+
+
+                    questionsEle.appendChild(questionEle);
+                }
+
+            }
+
+            function timer(min,sec){
+                minutes.innerText = min;
+                seconds.innerText = sec;
+                myInterval = setInterval( () =>{
+                    sec--;
+                    seconds.innerHTML = sec;
+                    if(sec == 59){
+                        min--;
+                        minutes.innerHTML = min;
+                    }
+                    if(sec == 0 && min !=0){
+                        seconds.innerHTML = 0;
+                        sec = 60;
+                    }
+                    if(sec == -1 && min == 0){
+                        clearInterval(myInterval);
+                        seconds.innerText = 0;
+                        finishedEle.click();
+                        
+                    }
+        
+                },1000);
+            }
+
+            // i => is the index of each script
+            function createBullets(i,numOfQuestion){
+            for(let j = 0; j<numOfQuestion;j++ ){
+                let anchor = document.createElement('a');
+                anchor.setAttribute('data-goto',`s${i}q${j}`);
+                bulletsEle.appendChild(anchor);
+                anchor.addEventListener('click',()=>{
+                document.getElementById(anchor.dataset.goto).scrollIntoView({behavior:"smooth"},true);
+                });
+            }
+            }
+
+            // i => is the index of each script
+            function pagination(i,numberOfScripts){
+                let count = i+1;
+                for(let j = 0; j<numberOfScripts;j++){
+                    let page = document.createElement('span');
+                    page.append(count);
+                    pages.appendChild(page);
+                    if(j == 0){
+                        page.classList.add('selected-page');
+                    }
+                        count++;
+                }
+            }
+
+            // i => is the index of script
+            // radioElementsArray => is the all radio buttons in the page (for each script)
+            function collectSelectedAnswer(i,radioElementsArray){
+                selectedAnswers[i] = [];
+                radioElementsArray.forEach(ele =>{
+                    if(ele.checked){
+                        selectedAnswers[i].push(ele.id);
+                    }
+                });
+            }
+
+            function checkCollectedAnswers(i,radioElementsArray){
+                radioElementsArray.forEach(ele=>{
+                    if(selectedAnswers[i].includes(ele.id)){
+                        ele.checked = true;
+                    }
+                });
+            }
+
+            finishedEle.addEventListener('click',(e)=>{
+                if(isFinished){
+                    e.preventDefault();
+                }
+                else{
+                     clearInterval(myInterval);
+                    markEle.classList.remove('display-none');
+                    finishedEle.classList.add('display-none');
+                    isFinished = true;
+                    let quesOverlay = document.querySelectorAll('main .rate-yourself-quiz-page .questions .question .ques-overlay');
+                    let quesOverlayArr = Array.prototype.slice.call(quesOverlay);
+                    quesOverlayArr.forEach(element => {
+                        element.classList.remove('display-none');
+                    });
+                    radioElements = document.querySelectorAll('.rate-yourself-quiz-page .question .answer input[type=radio]');
+                    radioElementsArr = Array.prototype.slice.call(radioElements);
+                    collectSelectedAnswer(index,radioElementsArr);
+         
+                    checkSelectedAnswers(numOfScripts);
+                    finalMarkEle.innerHTML = `${mark}/${numberOfQuestions}`;
+                }
+               
+            });
+
+            function checkSelectedAnswers(numberofScripts){
+                    
+                let tempLetter;
+                for(let i = 0; i<numberofScripts;i++){
+                    if(markedScripts.includes(i)){
+                        ismarked = true;
+                    }else{
+                        markedScripts.push(i);
+                    }
+                    
+                    for(let j = 0;j<model[i].RateYourselfQuizScriptQuestions.length;j++){
+                        tempLetter = model[i].RateYourselfQuizScriptQuestions[j].RightAnswer;
+                        if(selectedAnswers[i].includes(`s${i}q${j}a${letters.indexOf(tempLetter)+1}`)){
+                            if(document.getElementById(`well-dones${i}q${j}`) != null){
+                                 document.getElementById(`well-dones${i}q${j}`).classList.remove('display-none');
+                                document.getElementById(`wrongs${i}q${j}`).classList.add('display-none');
+                                document.getElementById(`right-answers${i}q${j}`).classList.add('display-none');
+                            }
+                            if(!ismarked){
+                                mark++;
+                            }
+                        }else{
+                            if(document.getElementById(`well-dones${i}q${j}`) != null){
+                                document.getElementById(`well-dones${i}q${j}`).classList.add('display-none');
+                                document.getElementById(`wrongs${i}q${j}`).classList.remove('display-none');
+                                document.getElementById(`right-answers${i}q${j}`).classList.remove('display-none');
+                            }
+                            
+                        }
+                        numberOfQuestions++;
+                    }
+                }
+                
+            }
+
+            
+            
+        }
+
+        
+
+
+    </script>
+}

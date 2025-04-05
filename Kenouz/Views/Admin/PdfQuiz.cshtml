@@ -1,0 +1,38 @@
+﻿@model AdminPdfQuizViewModel
+@{
+    ViewData["Title"] = "امتحانات";
+}
+            <div class="edit-pdf-quiz-overlay display-none" id="edit-pdf-quiz-overlay"></div>
+            <div class="add-btn action-btn" id="add-pdf-quiz-btn">إضافة امتحان جديد</div>
+            @await Html.PartialAsync("_AddPdfQuizPartial",
+                                       Model.pdfQuiz,
+                                       new ViewDataDictionary(ViewData){
+                                           {"YearId",ViewData["ClassYearId"]}
+                                       })
+
+            @await Html.PartialAsync("_EditPdfQuizPartial",
+                                       Model.pdfQuiz)
+            
+            <div class="pdf-quizzes-page">
+                <div class="quizzes">
+        @foreach(PdfQuiz pq in Model.pdfQuizzes)
+        {
+            <div class="quiz">
+                        <a href="@pq.Link">
+                            <div class="img"><img src="~/images/undraw_personal_file_re_5joy.svg"></div>
+                            <div class="title">@pq.Name</div>
+                        </a>
+                        <div class="actions">
+                            <div class="update-btn action-btn edit-pdf-quiz-btn" data-id="@pq.Id" data-yearid="@pq.ClassYearId" data-title="@pq.Name" data-link="@pq.Link">تعديل</div>
+                            <form asp-controller="PdfQuiz" asp-action="Delete" asp-route-id="@pq.Id" style="display:inline-block;">
+                                <input type="submit" class="delete-btn action-btn" value="حذف" onclick="return confirm('هل أنت متأكد من حذف هذا الأمتحان؟')">
+                            </form>
+                        </div>
+                    </div>
+        }
+                </div>
+            </div>
+
+@section Scripts1{
+    <script src="~/js/Admin/Adminpdfquizzes.js" asp-append-version="true"></script>
+}

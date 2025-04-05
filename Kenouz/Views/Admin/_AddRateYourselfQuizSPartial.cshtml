@@ -1,0 +1,14 @@
+﻿@model RateYourselfQuizS
+<form asp-controller="RateYourselfQuizS" asp-action="Add" class="add-script-form display-none" id="add-script-form">
+    <div class="field">
+        <label asp-for="@Model.Script">الفقرة</label>
+        <textarea asp-for="@Model.Script"></textarea>
+    </div>
+    <div class="field">
+        <input asp-for="@Model.RateYourselfQuizId" value="@ViewData["IdOfQuiz"]" hidden class="display-none">
+    </div>
+    <div class="actions">
+        <input type="submit" class="add-btn action-btn" value="إضافة" />
+        <span class="cancel-add-script" id="cancel-add-script">إلغاء</span>
+    </div>
+</form>

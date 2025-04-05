@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kenouz", "Kenouz\Kenouz.csproj", "{A43A3960-B999-4441-8B82-96D17E64B6BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A43A3960-B999-4441-8B82-96D17E64B6BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A43A3960-B999-4441-8B82-96D17E64B6BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A43A3960-B999-4441-8B82-96D17E64B6BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A43A3960-B999-4441-8B82-96D17E64B6BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8DD9B7E-832B-4067-A0EA-BA056C89BFD1}
+	EndGlobalSection
+EndGlobal
