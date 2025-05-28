@@ -1,0 +1,54 @@
+﻿@model List<RateYourselfQuiz>
+@{
+    ViewData["Title"] = "قيم نفسك باستمرار";
+}
+<div class="rate-yourself-page">
+    <div class="levels">
+        <a class="level" id="level1">سهل</a>
+        <a class="level" id="level2">متوسط</a>
+        <a class="level" id="level3">صعب</a>
+        <a class="level selected-level" id="all-levels">الكل</a>
+    </div>
+    <div class="quizzes">
+        @foreach (RateYourselfQuiz q in Model)
+        {
+            <form asp-controller="RateYourselfQuizS" asp-action="Index" asp-route-quizId="@q.Id" asp-route-classYearId = "@ViewData["classYearId"]" class="quiz @q.Level test-form">
+                <div class="img"><img src="/images/undraw_questions_re_1fy7.svg"></div>
+                <div class="quiz-title">
+                    <input type="submit" value="@q.Name" class="title input-of-test-form">
+                    <p class="time">@q.Time دقيقة</p>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+@section Scripts1{
+    <script src="~/js/User/rateyourself.js" asp-append-version="true"></script>
+
+    @* To check if user change the form attribute action=""*@
+    <script asp-append-version="true">
+        let forms = document.getElementsByClassName("test-form");
+        let formsArr = Array.prototype.slice.call(forms);
+
+        let inputs = document.getElementsByClassName("input-of-test-form");
+        let inputsArr = Array.prototype.slice.call(inputs);
+
+        TestFormvalues(formsArr,inputsArr);
+
+        function TestFormvalues (formsArray,inputArray){
+            let actions=[];
+            formsArray.forEach(element => {
+                actions.push(element.getAttribute('action'));
+            });
+            for(let i = 0; i< inputArray.length;i++){
+                inputArray[i].addEventListener('click',(e)=>{
+                    let newFormsArr = Array.prototype.slice.call(document.getElementsByClassName("test-form"));
+                    if(newFormsArr[i].getAttribute('action') != actions[i]){
+                        e.preventDefault();
+                    }
+            
+                });
+            }
+        }
+    </script>
+}

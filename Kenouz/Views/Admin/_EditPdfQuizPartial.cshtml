@@ -1,0 +1,21 @@
+﻿@model PdfQuiz
+<form asp-controller="PdfQuiz" asp-action="Edit" class="edit-pdf-quiz-form display-none" id="edit-pdf-quiz-form">
+    <div class="field">
+        <label for="edit-quiz-title">عنوان الأمتحان</label>
+        <input asp-for="@Model.Name" id="edit-quiz-title">
+    </div>
+    <div class="field">
+        <label for="edit-quiz-link">لينك pdf</label>
+        <input asp-for="@Model.Link" id="edit-quiz-link">
+    </div>
+    <div class="field">
+        <input asp-for="@Model.Id" id="edit-quiz-id" hidden class="display-none">
+    </div>
+    <div class="field">
+        <input asp-for="@Model.ClassYearId" id="edit-class-year-id" hidden class="display-none">
+    </div>
+    <div class="actions">
+        <input type="submit" class="add-btn action-btn" value="حفظ">
+        <a class="cancel-edit-pdf-quiz" id="cancel-edit-pdf-quiz">إلغاء</a>
+    </div>
+</form>

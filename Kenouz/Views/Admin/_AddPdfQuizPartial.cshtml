@@ -1,0 +1,18 @@
+﻿@model PdfQuiz
+<form asp-controller="PdfQuiz" asp-action="Add" class="add-pdf-quiz-form display-none" id="add-pdf-quiz-form">
+    <div class="field">
+        <label asp-for="@Model.Name">عنوان الأمتحان</label>
+        <input asp-for="@Model.Name">
+    </div>
+    <div class="field">
+        <label asp-for="@Model.Link">لينك pdf</label>
+        <input asp-for="@Model.Link">
+    </div>
+     <div class="field">
+        <input asp-for="@Model.ClassYearId" value="@ViewData["YearId"]" hidden class="display-none">
+    </div>
+    <div class="actions">
+        <input type="submit" class="add-btn action-btn add-pdf-quiz" value="إضافة">
+        <a class="cancel-add-pdf-quiz" id="cancel-add-pdf-quiz">إلغاء</a>
+    </div>
+</form>

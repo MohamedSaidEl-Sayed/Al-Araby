@@ -1,0 +1,24 @@
+## Ignore build results
+bin/
+obj/
+
+## Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+
+## Service dependencies (Visual Studio tooling)
+Kenouz/Properties/serviceDependencies.json
+Kenouz/Properties/serviceDependencies.local.json
+
+## Ignore temporary files
+*.tmp
+*.log
+
+## Ignore database files (if any)
+*.mdf
+*.ldf
+*.db
+
+## Scaffolding
+ScaffoldingReadMe.txt

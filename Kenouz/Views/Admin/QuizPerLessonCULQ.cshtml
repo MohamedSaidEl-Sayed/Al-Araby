@@ -1,0 +1,68 @@
+﻿@model AdminQuizPerLessonCULQViewModel
+<div class="lesson-quiz-page">
+    <div id="add-question-btn" class="add-question-btn add-btn action-btn">إضافة سؤال</div>
+    @await Html.PartialAsync("_AddQuizPerLessonCULQPartial",
+                                Model.quizPerLessonCULQ,
+                                new ViewDataDictionary(ViewData){
+                                    {"IdForLesson",ViewData["lessonid"]}
+                                })
+
+    <div class="admin-questions-page">
+        @foreach (QuizPerLessonCULQ q in Model.quizPerLessonCULQs)
+        {
+            <div class="admin-question">
+                @if(q.Script!= null)
+                {
+                <div class="script">@q.Script</div>
+                     <span class="more">قرأة المزيد</span>
+                <span class="hide display-none">إخفاء</span>
+                }
+               
+                <div class="question">
+                    <div class="title">@q.QuestionTitle</div>
+                    <div class="answers">
+                        <div class="answer">
+                            <div class="letter">أ</div>
+                            <div class="answer-text">@q.Answer1</div>
+                        </div>
+                        <div class="answer">
+                            <div class="letter">ب</div>
+                            <div class="answer-text">@q.Answer2</div>
+                        </div>
+                        <div class="answer">
+                            <div class="letter">ج</div>
+                            <div class="answer-text">@q.Answer3</div>
+                        </div>
+                        @if(q.Answer4 != null)
+                        {
+                            <div class="answer">
+                            <div class="letter">د</div>
+                            <div class="answer-text">@q.Answer4</div>
+                        </div>
+                        }
+                        @if(q.Answer5 != null)
+                        {
+                            <div class="answer">
+                            <div class="letter">ه</div>
+                            <div class="answer-text">@q.Answer5</div>
+                        </div>
+                        }
+                        <div class="right-answer">
+                            <div class="letter">@q.RightAnswer</div>
+                            <div class="time">@q.Seconds : @q.Minutes</div>
+                        </div>
+                        <div class="actions">
+                            <a asp-controller="QuizPerLessonCULQ" asp-action="Edit" asp-route-id="@q.Id" class="update-btn action-btn">تعديل</a>
+                            <form asp-controller="QuizPerLessonCULQ" asp-action="Delete" asp-route-id="@q.Id">
+                                <input type="submit" class="delete-btn action-btn" value="حذف" onclick="return confirm('هل أنت متأكد من حذف هذا السؤال؟')" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts1{
+    <script src="~/js/Admin/Adminlessonquiz.js" asp-append-version="true"></script>
+}

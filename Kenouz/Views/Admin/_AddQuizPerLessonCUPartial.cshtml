@@ -1,0 +1,6 @@
+﻿@model QuizPerLessonCU
+<form class="new-unit" asp-controller="QuizPerLessonCU" asp-action="Add">
+    <input type="submit" class="action-btn add-btn add-unit" value="إضافة وحدة">
+    <input asp-for="@Model.Name">
+    <input asp-for="@Model.QuizPerLessonCategoryId" value="@ViewData["CategoryId"]" hidden class="display-none"/>
+</form>

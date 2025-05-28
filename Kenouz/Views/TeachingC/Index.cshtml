@@ -1,0 +1,59 @@
+﻿@model List<TeachingC>
+@{
+    ViewData["Title"] = "الشروحات";
+}
+<div class="lessons-page">
+    @foreach (TeachingC c in Model)
+    {
+        <div class="category">@c.Name</div>
+        <ul class="units display-none">
+            @foreach (TeachingCU cu in c.TeachingCategoryUnits)
+            {
+                <li>
+                    <p class="unit-title">@cu.Name</p>
+                    <ul class="lessons">
+                        @foreach (TeachingCUL cul in cu.TeachingCategoryUnitLessons)
+                        {
+                            <li>
+                                <form asp-controller="TeachingCUL" asp-action="Index" asp-route-id="@cul.Id" asp-route-classYearId = "@ViewData["classYearId"]" class="test-form">
+                                        <p class="title">@cul.Name</p>
+                                        <input type="submit" value="مشاهدة" class="input-of-test-form">
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    }
+</div>
+@section Scripts1{
+    <script src="~/js/User/lessons.js" asp-append-version="true"></script>
+
+    @* To check if user change the form attribute action=""*@
+    <script asp-append-version="true">
+        let forms = document.getElementsByClassName("test-form");
+        let formsArr = Array.prototype.slice.call(forms);
+
+        let inputs = document.getElementsByClassName("input-of-test-form");
+        let inputsArr = Array.prototype.slice.call(inputs);
+
+        TestFormvalues(formsArr,inputsArr);
+
+        function TestFormvalues (formsArray,inputArray){
+            let actions=[];
+            formsArray.forEach(element => {
+                actions.push(element.getAttribute('action'));
+            });
+            for(let i = 0; i< inputArray.length;i++){
+                inputArray[i].addEventListener('click',(e)=>{
+                    let newFormsArr = Array.prototype.slice.call(document.getElementsByClassName("test-form"));
+                    if(newFormsArr[i].getAttribute('action') != actions[i]){
+                        e.preventDefault();
+                    }
+            
+                });
+            }
+        }
+    </script>
+}

@@ -1,0 +1,63 @@
+﻿@model AdminRateYourselfQuizViewModel
+@{
+    ViewData["Title"] = "قيم نفسك باستمرار";
+}
+<div class="new-quiz-overlay display-none" id="new-quiz-overlay"></div>
+
+@await Html.PartialAsync("_AddRateYourselfQuizPartial",
+                            Model.rateYourselfQuiz,
+                            new ViewDataDictionary(ViewData){
+                                {"yearId",ViewData["ClassYearId"]}
+                            })
+@await Html.PartialAsync("_EditRateYourselfQuizPartial",
+                            Model.rateYourselfQuiz)
+
+<div class="rate-yourself-page">
+    <div class="add-quiz-btn" id="new-quiz-btn">إضافة امتحان جديد</div>
+    <div class="levels">
+        <a class="level" id="level1">سهل</a>
+        <a class="level" id="level2">متوسط</a>
+        <a class="level" id="level3">صعب</a>
+        <a class="level selected-level" id="all-levels">الكل</a>
+    </div>
+    <div class="quizzes">
+        @foreach (RateYourselfQuiz rq in Model.rateYourselfQuizzes)
+        {
+            <div class="quiz" data-level="@rq.Level">
+                <a asp-controller="Admin" asp-action="RateYourselfQuizS" asp-route-quizId="@rq.Id">
+                    <div class="img"><img src="~/images/undraw_questions_re_1fy7.svg"></div>
+                    <div class="quiz-title">
+                        <p class="title">
+                            <span>@rq.Name</span>
+                            <br>
+                            <span class="time">@rq.Time دقيقة</span>
+                            <br>
+                            @if(rq.Level == "level1")
+                            {
+                                <span class="level">سهل</span>
+                            }
+                            else if(rq.Level == "level2")
+                            {
+                                <span class="level">متوسط</span>
+                            }
+                            else if(rq.Level == "level3")
+                            {
+                                <span class="level">صعب</span>
+                            }
+                        </p>
+                    </div>
+                </a>
+                <div class="actions">
+                    <div class="update-btn action-btn edit-quiz-btn" data-id="@rq.Id" data-name="@rq.Name" data-classyearid="@rq.ClassYearId" data-level="@rq.Level" data-time="@rq.Time">تعديل</div>
+                    <form asp-controller="RateYourselfQuiz" asp-action="Delete" asp-route-id="@rq.Id">
+                        <input type="submit" class="delete-btn action-btn" value="حذف" onclick="return confirm('هل انت متأكد من حذف هذا الامتحان؟')">
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts1{
+    <script src="~/js/Admin/Adminrateyourself.js" asp-append-version="true"></script>
+}
+

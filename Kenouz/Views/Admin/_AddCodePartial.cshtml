@@ -1,0 +1,20 @@
+﻿@model AddCodeViewModel
+<form class="add-code-form display-none" id="add-code-form" asp-controller="Admin" asp-action="AddCode">
+    <div class="field">
+        <input asp-for="@Model.Code" id="code" type="text" placeholder="الكود" minlength="6"/>
+    </div>
+    @* <div class="field">
+        <input asp-for="@Model.Password" id="pass" type="password" hidden/>
+    </div> *@
+    <div class="field">
+        <select asp-for="@Model.Role">
+            <option value="User1" selected>الصف الأول الثانوي</option>
+            <option value="User2">الصف الثاني الثانوي</option>
+            <option value="User3">الصف الثالث الثانوي</option>
+        </select>
+    </div>
+    <div class="actions">
+        <input id="add-code" type="submit" value="إضافة">
+        <span id="cancel-add-code">إلغاء</span>
+    </div>
+</form>

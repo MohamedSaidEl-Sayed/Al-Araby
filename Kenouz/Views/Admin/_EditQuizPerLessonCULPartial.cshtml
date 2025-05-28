@@ -1,0 +1,10 @@
+﻿@model QuizPerLessonCUL
+<form class="edit-lesson display-none" asp-controller="QuizPerLessonCUL" asp-action="Edit">
+    <input asp-for="@Model.Name" id="edit-lesson-input">
+    <input asp-for="@Model.Id" id="edit-lesson-id" hidden class="display-none">
+    <input asp-for="@Model.QuizPerLessonCategoryUnitId" id="edit-lesson-unitId" hidden class="display-none">
+    <div class="actions">
+        <input type="submit" value="حفظ" id="edit-lesson">
+        <input type="button" value="إلغاء" id="cancel-edit-lesson">
+    </div>
+</form>

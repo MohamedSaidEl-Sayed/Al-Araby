@@ -1,0 +1,231 @@
+﻿@model AdminRateYourselfQuizSViewModel
+            <div id="model" style="display:none;">@Model.rateYourselfQuizSs</div>
+            <div class="rate-yourself-quiz-page">
+                <div class="actions">
+                    <div class="add-script-btn" id="add-script-btn">إضافة فقرة جديدة</div>
+                    <div class="add-question-btn" id="add-question-btn">إضافة سؤال جديد</div>
+                </div>
+                
+                @await Html.PartialAsync("_AddRateYourselfQuizSQPartial",
+                                            Model.rateYourselfQuizSQ)
+
+                @await Html.PartialAsync("_AddRateYourselfQuizSPartial",
+                                            Model.rateYourselfQuizS,
+                                            new ViewDataDictionary(ViewData){
+                                                {"IdOfQuiz",ViewData["quizId"]}
+                                            })
+                
+  
+        <div class="nav">
+                <div class="bullets">
+            </div>
+            </div>
+        <div class="script" id="script"></div>
+                <div class="script-actions">
+                    <div>
+                        <span class="more" id="more">قرأة المزيد</span>
+                        <span class="hide display-none" id="hide">إخفاء</span>
+                    </div>
+                    <div class="actions">
+                        <a id="edit-script"  class="update-btn action-btn">تعديل</a>
+                        <form id="delete-script" method="post" style="display:inline-block;margin-right:10px;">
+                            <input type="submit" class="delete-btn action-btn"  value="حذف" onclick="return confirm('هل أنت متأكد من حذف الفقرة بأسئلتها؟')">
+                        </form>
+                    </div>
+                </div>
+                <div class="questions">
+                    
+            
+                </div>
+
+                <div class="pagination">
+                    <div class="next" id="next">التالي</div>
+                    <div class="pages">
+                        
+                    </div>
+                    <div class="pervious" id="pervious">السابق</div>
+                </div>
+            </div>
+@section Scripts1{
+    <script src="~/js/Admin/Adminrateyourselfquiz.js" asp-append-version="true"></script>
+    <script asp-append-version="true">
+        let m = document.getElementById('model').innerText;
+        let model = JSON.parse(m);
+
+        if(model.length > 0){
+
+             let i=0;
+
+        let bulletsEle = document.querySelector('.rate-yourself-quiz-page .nav .bullets');
+        let scriptEle = document.getElementById('script');
+        let questions = document.querySelector('.rate-yourself-quiz-page .questions');
+        let pages = document.querySelector('.rate-yourself-quiz-page .pagination .pages');
+        let editScript = document.getElementById('edit-script');
+        let deleteScript = document.getElementById('delete-script');
+        let letters = ["أ","ب","ج","د","ه"];
+
+
+        getQuestion(i);
+        createBullets(i,model[i].RateYourselfQuizScriptQuestions.length);
+        pagination(i,model.length);
+
+
+        let childernOfPages = Array.prototype.slice.call(pages.children);
+        childernOfPages.forEach(ele => ele.addEventListener('click',()=>{
+            childernOfPages.forEach(e=>e.classList.remove('selected-page'));
+            ele.classList.add('selected-page');
+            i = parseInt(ele.innerHTML)-1;
+            questions.innerHTML='';
+            bulletsEle.innerHTML='';
+            getQuestion(i);
+            createBullets(i,model[i].RateYourselfQuizScriptQuestions.length);
+
+        }));
+
+        let next = document.getElementById('next');
+        next.addEventListener('click',(e)=>{
+            if(i == model.length-1){
+                e.preventDefault();
+            }else{
+                 i++;
+                questions.innerHTML='';
+                bulletsEle.innerHTML='';
+                getQuestion(i);
+                createBullets(i,model[i].RateYourselfQuizScriptQuestions.length);
+                childernOfPages.forEach(e=>e.classList.remove('selected-page'));
+                childernOfPages.forEach(function(ele){
+                    if(ele.innerHTML == i+1){
+                        ele.classList.add('selected-page');
+                    }
+                });
+            }
+        });
+
+         let pervious = document.getElementById('pervious');
+        pervious.addEventListener('click',(e)=>{
+            if(i == 0){
+                e.preventDefault();
+            }else{
+                 i--;
+                questions.innerHTML='';
+                bulletsEle.innerHTML='';
+                getQuestion(i);
+                createBullets(i,model[i].RateYourselfQuizScriptQuestions.length);
+                childernOfPages.forEach(e=>e.classList.remove('selected-page'));
+                childernOfPages.forEach(function(ele){
+                    if(ele.innerHTML == i+1){
+                        ele.classList.add('selected-page');
+                    }
+                });
+            }
+        });
+       
+        addQuestionBtn.addEventListener('click',(event)=>{
+            document.getElementById('id-of-script').value= event.target.dataset.scriptid;
+        });
+
+        function getQuestion(i){
+            scriptEle.innerHTML=model[i].Script;
+            editScript.setAttribute('href',`/RateYourselfQuizS/Edit/${model[i].Id}`);
+            deleteScript.setAttribute('action',`/RateYourselfQuizS/Delete/${model[i].Id}`);
+            addQuestionBtn.setAttribute('data-scriptid',`${model[i].Id}`);
+
+
+            for(let j = 0;j<model[i].RateYourselfQuizScriptQuestions.length;j++){
+
+                let title = document.createElement('div');
+                title.classList.add('title');
+                title.innerHTML = model[i].RateYourselfQuizScriptQuestions[j].QuestionTitle;
+                let answers = document.createElement('div');
+                answers.classList.add('answers');
+
+                for(let k = 1;k<=5;k++){
+
+                    let answerText = document.createElement('div');
+                answerText.classList.add('answer-text');
+                answerText.append(model[i].RateYourselfQuizScriptQuestions[j][`Answer${k}`]);
+                let letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.append(letters[k-1]);
+                let label = document.createElement('label');
+                label.appendChild(letter);
+                label.appendChild(answerText);
+                let answer = document.createElement('div');
+                answer.classList.add('answer');
+                answer.appendChild(label);
+                if(model[i].RateYourselfQuizScriptQuestions[j][`Answer${k}`] != null && model[i].RateYourselfQuizScriptQuestions[j][`Answer${k}`] != ""){
+                    answers.appendChild(answer);
+                }
+
+                }
+
+                let rightAnswer = document.createElement('div');
+                rightAnswer.classList.add('right-answer');
+                rightAnswer.innerHTML = model[i].RateYourselfQuizScriptQuestions[j].RightAnswer;
+                answers.appendChild(rightAnswer);
+                
+                let editquesbtn = document.createElement('a');
+                editquesbtn.innerHTML="تعديل";
+                editquesbtn.classList.add("update-btn");
+                editquesbtn.classList.add("action-btn");
+                editquesbtn.setAttribute('href',`/RateYourselfQuizSQ/Edit/${model[i].RateYourselfQuizScriptQuestions[j].Id}`);
+
+                let deletequesBtn = document.createElement('a');
+                deletequesBtn.innerHTML = "حذف";
+                deletequesBtn.style.marginRight="10px";
+                deletequesBtn.classList.add('delete-btn');
+                deletequesBtn.classList.add('action-btn');
+                deletequesBtn.setAttribute('href',`/RateYourselfQuizSQ/Delete/${model[i].RateYourselfQuizScriptQuestions[j].Id}`);
+                
+               
+
+                let questionAction = document.createElement('div');
+                questionAction.classList.add('actions');
+                questionAction.appendChild(editquesbtn);
+                questionAction.appendChild(deletequesBtn);
+
+
+                answers.appendChild(questionAction);
+
+                let question = document.createElement('div');
+                question.classList.add('question');
+                question.id = `s${i}q${j}`;
+                question.appendChild(title);
+                question.appendChild(answers);
+                
+                questions.appendChild(question);
+       
+            }
+        }
+
+        function createBullets(i,numOfQuestion){
+            for(let j = 0; j<numOfQuestion;j++ ){
+                let anchor = document.createElement('a');
+                anchor.setAttribute('data-goto',`s${i}q${j}`);
+                bulletsEle.appendChild(anchor);
+                anchor.addEventListener('click',()=>{
+                document.getElementById(anchor.dataset.goto).scrollIntoView({behavior:"smooth"},true);
+                });
+            }
+        }
+
+        function pagination(i,numOfScripts){
+            let count = i+1;
+            for(let j = 0; j<numOfScripts;j++){
+                let page = document.createElement('span');
+                page.append(count);
+                pages.appendChild(page);
+                if(j == 0){
+                    page.classList.add('selected-page');
+                }
+                    count++;
+            }
+        }
+
+        }
+
+       
+
+    </script>
+}
+           
