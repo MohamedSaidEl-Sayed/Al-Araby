@@ -11,7 +11,7 @@
 
 ## 📋 Table of Contents
 - [Project Overview](#-project-overview)
-- [Technologies Used](#-technologies-used)
+- [Technologies Used](#️-technologies-used)
 - [Features](#-features)
 - [Getting Started](#-getting-started)
 - [Installation Guide](#-installation-guide)
