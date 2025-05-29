@@ -1,7 +1,7 @@
 # 🎓 Al-Araby: Online Learning Web App (Kenouz)
 
 ![Main Page](https://github.com/MohamedSaidEl-Sayed/Al-Araby.git)
-![Main Page]([https://raw.githubusercontent.com//MohamedSaidEl-Sayed/Al-Araby/Demo_ScreenShots/MainPage.png](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/MainPage.png))
+![jjjj](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/MainPage.png)
 [![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Framework-purple)](https://dotnet.microsoft.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
