@@ -19,11 +19,11 @@
 - [Usage](#-usage)
 - [Project Structure](#-project-structure)
 - [Contributing](#-contributing)
-- [License](#-license)
+- [Application Screenshots](#-application-screenshots)
 
 ---
 
-## 📌 Project Overview                 [Table of Contents](#-table-of-contents)
+## 📌 Project Overview    [⇧](#-table-of-contents)
 
 Al-Araby is a secure, role-based online learning platform specifically designed for Arabic language education. The platform provides a comprehensive solution for teachers to manage students, deliver content, and assess learning progress through an intuitive web interface.
 
@@ -36,10 +36,10 @@ Al-Araby is a secure, role-based online learning platform specifically designed 
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Technologies Used    [⇧](#-table-of-contents)
 
 ### Backend
-- **ASP.NET Core** - Web framework
+- **ASP.NET Core (MVC)** - Web framework
 - **Entity Framework Core** - ORM for database operations
 - **SQL Server** - Database management system
 - **ASP.NET Core Identity** - Authentication and authorization
@@ -56,7 +56,7 @@ Al-Araby is a secure, role-based online learning platform specifically designed 
 
 ---
 
-## ✨ Features
+## ✨ Features    [⇧](#-table-of-contents)
 
 ### 🔐 Authentication & Security
 - **Unique Login Codes**: Students access the platform using admin-generated codes
@@ -74,7 +74,6 @@ Al-Araby is a secure, role-based online learning platform specifically designed 
 - **Structured Lessons**: Organized Arabic language curriculum
 - **Video Integration**: Multimedia content for enhanced learning
 - **Assessment Tools**: Built-in quiz system for knowledge evaluation
-- **Progress Tracking**: Monitor student learning advancement
 
 ### 🎯 Student Categorization
 - **1st Secondary Level**
@@ -84,7 +83,7 @@ Al-Araby is a secure, role-based online learning platform specifically designed 
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started    [⇧](#-table-of-contents)
 
 ### Prerequisites
 Before you begin, ensure you have the following installed:
@@ -100,7 +99,7 @@ Before you begin, ensure you have the following installed:
 
 ---
 
-## 🔧 Installation Guide
+## 🔧 Installation Guide    [⇧](#-table-of-contents)
 
 ### 1. Clone the Repository
 ```bash
@@ -118,7 +117,7 @@ Update the connection string in `appsettings.json`:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=AlArabyDB;Trusted_Connection=true;MultipleActiveResultSets=true"
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=AlArabyDB;Trusted_Connection=true;MultipleActiveResultSets=true"  (e.g. your connection)
   }
 }
 ```
@@ -138,27 +137,27 @@ The application will be available at: `https://localhost:5001` or `http://localh
 
 ---
 
-## 🔑 Default Admin Account
+## 🔑 Default Admin Account    [⇧](#-table-of-contents)
 
 A default admin account has been created through database seeding during the initial migration.
 
 ### Admin Login Credentials
-- **Login Code**: `ADMIN2024`
-- **Role**: Administrator
+- **Login Code**: `0A209d429admin`
+- **Role**: Admin
 - **Permissions**: Full system access
 
-> ⚠️ **Important Security Note**: Change the default admin credentials immediately after first login for production use.
+> ⚠️ **Important Note**: Change the default admin credentials from Migrations that seeding the Role "Admin" and seeding the Code of the Admin
 
 ### First-Time Setup
 1. Navigate to the login page
-2. Enter the admin code: `ADMIN2024`
+2. Enter the admin code: `0A209d429admin`
 3. Access the admin dashboard
 4. Create student accounts and generate their unique login codes
 5. Configure educational content and lessons
 
 ---
 
-## 💡 Usage
+## 💡 Usage    [⇧](#-table-of-contents)
 
 ### For Administrators
 1. **Login** using the admin code
@@ -166,45 +165,33 @@ A default admin account has been created through database seeding during the ini
 3. **Generate Login Codes** for each student
 4. **Upload Content** including lessons and videos
 5. **Create Assessments** using the quiz management system
-6. **Monitor Progress** through the dashboard analytics
 
 ### For Students
 1. **Receive Login Code** from your teacher
 2. **Access Platform** using your unique code
 3. **Complete Lessons** in your assigned level
 4. **Take Quizzes** to test your knowledge
-5. **Track Progress** through your learning journey
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure    [⇧](#-table-of-contents)
 
 ```
 Al-Araby/
-├── Controllers/          # MVC Controllers
-├── Models/              # Data models and ViewModels
+├── Controllers/         # MVC Controllers
+├── Models/              # Data models
 ├── Views/               # Razor views
 ├── Data/                # Entity Framework context and migrations
+├── Migrations/          # migrations
 ├── wwwroot/             # Static files (CSS, JS, images)
-├── Services/            # Business logic services
+├── ViewModels/          # Transfer Data
 ├── Areas/               # Admin and user areas
 └── appsettings.json     # Configuration file
 ```
 
 ---
 
-## 🔄 Upcoming Features
-
-### Revision Module
-A comprehensive review system currently in development that will include:
-- **Practice Sessions**: Reinforcement exercises for completed lessons
-- **Progress Analytics**: Detailed learning progress reports
-- **Adaptive Learning**: Personalized content recommendations
-- **Performance Tracking**: Comprehensive assessment analytics
-
----
-
-## 🤝 Contributing
+## 🤝 Contributing    [⇧](#-table-of-contents)
 
 This is a freelance project developed for a specific client. However, if you'd like to contribute or have suggestions:
 
@@ -213,84 +200,33 @@ This is a freelance project developed for a specific client. However, if you'd l
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+---
+
+
+## 📱 Application Screenshots    [⇧](#-table-of-contents)
+
+### 🏠 Home Page
+![Main Page](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/MainPage.png)
 
 ---
 
-## 📞 Support & Contact
-
-For questions, issues, or collaboration opportunities:
-
-- **GitHub**: [@MohamedSaidEl-Sayed](https://github.com/MohamedSaidEl-Sayed)
-- **Repository**: [Al-Araby Project](https://github.com/MohamedSaidEl-Sayed/Al-Araby.git)
+### 👨‍🏫 Manage Resourses
+![Manage Resourses](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/ManagedResources.png)
 
 ---
 
-## 📱 Application Screenshots
-
-### 🏠 Home Page & Login
-<div align="center">
-  <img src="images/screenshots/login-page.png" alt="Al-Araby Login Page" width="600">
-  <p><em>Secure login interface with unique student codes</em></p>
-</div>
-
----
-
-### 👨‍🏫 Admin Dashboard
-<img src="images/screenshots/admin-dashboard.png" alt="Admin Dashboard Interface" width="800">
-*Comprehensive admin panel for managing students, content, and assessments*
-
----
-
-### 📚 Student Learning Interface
-<div align="center">
-  <img src="images/screenshots/student-interface.png" alt="Student Learning Interface" width="700">
-  <p><em>Interactive Arabic language lessons with multimedia content</em></p>
-</div>
+### 📚 Exams
+![Examst](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/Exams.png)
 
 ---
 
 ### 📊 Quiz Management System
-<img src="images/screenshots/quiz-system.png" alt="Quiz Management System" width="600">
-*Built-in assessment tools for testing student knowledge*
+![Quiz Management](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/QuizManagement.PNG)
 
 ---
 
-## 🏗️ System Architecture
-
-<div align="center">
-  <img src="images/diagrams/system-architecture.png" alt="Al-Araby System Architecture" width="100%" style="max-width: 900px;">
-  <p><em>Complete system architecture showing ASP.NET Core backend with SQL Server database</em></p>
-</div>
-
----
-
-## 📱 Responsive Design Preview
-
-### Desktop View
-<img src="images/screenshots/desktop-view.png" alt="Desktop View" width="800">
-
-### Tablet View
-<img src="images/screenshots/tablet-view.png" alt="Tablet View" width="500">
-
-### Mobile View
-<img src="images/screenshots/mobile-view.png" alt="Mobile View" width="300">
-
----
-
-## 🎯 User Flow Diagram
-
-<div align="center">
-  <img src="images/diagrams/user-flow.png" alt="User Flow Diagram" width="700">
-  <p><em>Complete user journey from login to course completion</em></p>
-</div>
-
----
-
-## 🙏 Acknowledgments
-
-- **Client**: Arabic Language Teacher who commissioned this project
-- **Community**: ASP.NET Core and Entity Framework communities for excellent documentation
-- **Tools**: Microsoft for providing robust development frameworks
+### 🎬 Videos
+![Videos](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/Videos.png)
 
 ---
 
