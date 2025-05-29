@@ -23,7 +23,7 @@
 
 ---
 
-## 📌 Project Overview    
+## 📌 Project Overview
 Al-Araby is a secure, role-based online learning platform specifically designed for Arabic language education. The platform provides a comprehensive solution for teachers to manage students, deliver content, and assess learning progress through an intuitive web interface.
 
 ### Key Highlights
@@ -35,7 +35,7 @@ Al-Araby is a secure, role-based online learning platform specifically designed 
 
 ---
 
-## 🛠️ Technologies Used    [⇧](#-table-of-contents)
+## 🛠️ Technologies Used
 
 ### Backend
 - **ASP.NET Core (MVC)** - Web framework
@@ -55,7 +55,7 @@ Al-Araby is a secure, role-based online learning platform specifically designed 
 
 ---
 
-## ✨ Features    [⇧](#-table-of-contents)
+## ✨ Features
 
 ### 🔐 Authentication & Security
 - **Unique Login Codes**: Students access the platform using admin-generated codes
@@ -82,7 +82,7 @@ Al-Araby is a secure, role-based online learning platform specifically designed 
 
 ---
 
-## 🚀 Getting Started    [⇧](#-table-of-contents)
+## 🚀 Getting Started
 
 ### Prerequisites
 Before you begin, ensure you have the following installed:
@@ -98,7 +98,7 @@ Before you begin, ensure you have the following installed:
 
 ---
 
-## 🔧 Installation Guide    [⇧](#-table-of-contents)
+## 🔧 Installation Guide
 
 ### 1. Clone the Repository
 ```bash
@@ -136,7 +136,7 @@ The application will be available at: `https://localhost:5001` or `http://localh
 
 ---
 
-## 🔑 Default Admin Account    [⇧](#-table-of-contents)
+## 🔑 Default Admin Account
 
 A default admin account has been created through database seeding during the initial migration.
 
@@ -156,7 +156,7 @@ A default admin account has been created through database seeding during the ini
 
 ---
 
-## 💡 Usage    [⇧](#-table-of-contents)
+## 💡 Usage
 
 ### For Administrators
 1. **Login** using the admin code
@@ -173,7 +173,7 @@ A default admin account has been created through database seeding during the ini
 
 ---
 
-## 📁 Project Structure    [⇧](#-table-of-contents)
+## 📁 Project Structure
 
 ```
 Al-Araby/
@@ -190,7 +190,7 @@ Al-Araby/
 
 ---
 
-## 🤝 Contributing    [⇧](#-table-of-contents)
+## 🤝 Contributing
 
 This is a freelance project developed for a specific client. However, if you'd like to contribute or have suggestions:
 
@@ -202,7 +202,7 @@ This is a freelance project developed for a specific client. However, if you'd l
 ---
 
 
-## 📱 Application Screenshots    [⇧](#-table-of-contents)
+## 📱 Application Screenshots
 
 ### 🏠 Home Page
 ![Main Page](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/MainPage.png)
