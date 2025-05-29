@@ -1,10 +1,7 @@
 # 🎓 Al-Araby: Online Learning Web App (Kenouz)
 
-![Main Page](https://github.com/MohamedSaidEl-Sayed/Al-Araby.git)
-![jjjj](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/MainPage.png)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/MohamedSaidEl-Sayed/Al-Araby.git)
 [![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Framework-purple)](https://dotnet.microsoft.com/)
-<img src="https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/MainPage.png" alt="Screenshot" width="350" height="200">
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > **Freelance Project** – A comprehensive online learning platform developed for an Arabic Language Teacher  
 > 📅 **Start Date:** May 2022  
@@ -228,9 +225,64 @@ For questions, issues, or collaboration opportunities:
 
 ---
 
-## 📄 License
+## 📱 Application Screenshots
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### 🏠 Home Page & Login
+<div align="center">
+  <img src="images/screenshots/login-page.png" alt="Al-Araby Login Page" width="600">
+  <p><em>Secure login interface with unique student codes</em></p>
+</div>
+
+---
+
+### 👨‍🏫 Admin Dashboard
+<img src="images/screenshots/admin-dashboard.png" alt="Admin Dashboard Interface" width="800">
+*Comprehensive admin panel for managing students, content, and assessments*
+
+---
+
+### 📚 Student Learning Interface
+<div align="center">
+  <img src="images/screenshots/student-interface.png" alt="Student Learning Interface" width="700">
+  <p><em>Interactive Arabic language lessons with multimedia content</em></p>
+</div>
+
+---
+
+### 📊 Quiz Management System
+<img src="images/screenshots/quiz-system.png" alt="Quiz Management System" width="600">
+*Built-in assessment tools for testing student knowledge*
+
+---
+
+## 🏗️ System Architecture
+
+<div align="center">
+  <img src="images/diagrams/system-architecture.png" alt="Al-Araby System Architecture" width="100%" style="max-width: 900px;">
+  <p><em>Complete system architecture showing ASP.NET Core backend with SQL Server database</em></p>
+</div>
+
+---
+
+## 📱 Responsive Design Preview
+
+### Desktop View
+<img src="images/screenshots/desktop-view.png" alt="Desktop View" width="800">
+
+### Tablet View
+<img src="images/screenshots/tablet-view.png" alt="Tablet View" width="500">
+
+### Mobile View
+<img src="images/screenshots/mobile-view.png" alt="Mobile View" width="300">
+
+---
+
+## 🎯 User Flow Diagram
+
+<div align="center">
+  <img src="images/diagrams/user-flow.png" alt="User Flow Diagram" width="700">
+  <p><em>Complete user journey from login to course completion</em></p>
+</div>
 
 ---
 
@@ -247,3 +299,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 *Last Updated: May 2025*
+
+
+
