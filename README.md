@@ -11,7 +11,7 @@
 
 ## 📋 Table of Contents
 - [Project Overview](#-project-overview)
-- [Technologies Used](#️-technologies-used)
+- [Technologies Used](#-technologies-used)
 - [Features](#-features)
 - [Getting Started](#-getting-started)
 - [Installation Guide](#-installation-guide)
@@ -23,8 +23,7 @@
 
 ---
 
-## 📌 Project Overview    [⇧](#-table-of-contents)
-
+## 📌 Project Overview    
 Al-Araby is a secure, role-based online learning platform specifically designed for Arabic language education. The platform provides a comprehensive solution for teachers to manage students, deliver content, and assess learning progress through an intuitive web interface.
 
 ### Key Highlights
