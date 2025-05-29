@@ -3,6 +3,7 @@
 ![Main Page](https://github.com/MohamedSaidEl-Sayed/Al-Araby.git)
 ![jjjj](https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/MainPage.png)
 [![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Framework-purple)](https://dotnet.microsoft.com/)
+<img src="https://github.com/MohamedSaidEl-Sayed/Al-Araby/blob/main/Demo_ScreenShots/MainPage.png" alt="Screenshot" width="350" height="200">
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > **Freelance Project** – A comprehensive online learning platform developed for an Arabic Language Teacher  
