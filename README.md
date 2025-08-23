@@ -4,7 +4,7 @@
 [![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Framework-purple)](https://dotnet.microsoft.com/)
 
 > **Freelance Project** – A comprehensive online learning platform developed for an Arabic Language Teacher  
-> 📅 **Start Date:** May 2022  
+> 📅 **Start Date:** August 2022  
 > 👨‍💻 **Developer:** [Mohamed Said El-Sayed](https://github.com/MohamedSaidEl-Sayed)
 
 ---
